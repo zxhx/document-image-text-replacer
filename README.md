@@ -42,13 +42,13 @@ Clone this repository directly into your Antigravity global configuration direct
 
 #### Windows (PowerShell):
 ```powershell
-git clone https://github.com/<your-username>/document-image-text-replacer.git "$HOME\.gemini\config\skills\document-image-text-replacer"
+git clone https://github.com/zxhx/document-image-text-replacer.git "$HOME\.gemini\config\skills\document-image-text-replacer"
 pip install -r "$HOME\.gemini\config\skills\document-image-text-replacer\requirements.txt"
 ```
 
 #### macOS / Linux:
 ```bash
-git clone https://github.com/<your-username>/document-image-text-replacer.git ~/.gemini/config/skills/document-image-text-replacer
+git clone https://github.com/zxhx/document-image-text-replacer.git ~/.gemini/config/skills/document-image-text-replacer
 pip install -r ~/.gemini/config/skills/document-image-text-replacer/requirements.txt
 ```
 
