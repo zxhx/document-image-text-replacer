@@ -24,7 +24,7 @@ This skill provides a systematic, typography-grounded workflow to seamlessly rep
 
 ## Quick Start
 
-When the user asks to change text in an image (e.g. *"将签到表里的日期 2026.8.21 改为 2026.7.30"*):
+When the user asks to change text in an image (e.g. *"帮我将表格图片中的日期 '2026.8.21' 改为 '2026.5.30'，文字大小和规格保持现状"*):
 
 1. **Locate Target Region**:
    Crop a small region around the text using Python/PIL to determine exact pixel bounding box `(x1, y1, x2, y2)`.

@@ -60,9 +60,9 @@ Once cloned, Antigravity will automatically discover and load the skill across a
 
 Simply ask Antigravity naturally in any workspace:
 
-> "帮我将签到表图片中的日期 '2026.8.21' 改为 '2026.7.30'，文字大小和规格保持现状"
+> "帮我将表格图片中的日期 '2026.8.21' 改为 '2026.5.30'，文字大小和规格保持现状"
 >
-> *"Please replace the date '2026.8.21' in this form image with '2026.7.30', keeping font size, baseline, and scanned texture consistent."*
+> *"Please replace the date '2026.8.21' in this table image with '2026.5.30', keeping font size, baseline, and scanned texture consistent."*
 
 Antigravity will automatically:
 1. Locate the text and analyze font metrics.
@@ -82,7 +82,7 @@ python scripts/replacer.py preview \
   --box 1250 368 1430 403 \
   --erase-box 95 0 175 35 \
   --text-x 97 --text-y -7 \
-  --replace-text "7. 30" \
+  --replace-text "5. 30" \
   --font-family stsong \
   --font-size 35 \
   --output-dir "./preview_output"
