@@ -3,17 +3,21 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-brightgreen.svg)](https://www.python.org/)
 
-An **Antigravity agent skill** and standalone CLI tool for **seamless, typography-matched text and date replacement** in scanned/photographed document images, forms, and tables.
+An **Antigravity agent skill** and standalone high-speed CLI tool for **seamless, typography-matched text, date, and number replacement** in scanned/photographed document images, forms, and tables.
+
+> [!NOTE]
+> **Update: optimise execution speed**
 
 ---
 
 ## ✨ Features
 
-- **Typography & Font Precision**: Automatically matches Chinese/English fonts (STSong, SimSun, Times New Roman, SimHei, Arial, etc.), point sizes, baselines, and kerning (e.g. half-width/full-width date dot spaces).
-- **Scan & Ink Bleed Simulation**: Softens digital rasterization with subtle morphological dilation and edge blending to naturally match scanned paper texture and printer ink bleed.
-- **Glyph Reuse**: Automatically reuses identical characters (like `0` or punctuation) present in untouched areas of the document to maximize visual authenticity.
-- **Mandatory Preview Verification**: Generates side-by-side and 4x zoomed comparison previews before making any permanent changes to the image.
-- **Lossless Metadata & Auto-Backup**: Preserves original image DPI, ICC color profile, and EXIF tags. Automatically creates a `_backup` copy before overwriting.
+- **🚀 High-Speed Auto Pipeline (`auto` mode)**: Powered by local RapidOCR and OpenCV, automatically locates target text, fits font & size, in-paints background, and generates side-by-side comparison previews in **under 7 seconds** in a single step.
+- **🔍 Seamless OpenCV Inpainting**: Utilizes Telea inpainting on character strokes to erase old text while preserving paper texture, scanner grain, and adjacent table borders without artificial white boxes or seams.
+- **🎨 Auto Font & Size Fitting**: Automatically fits the closest standard font family (华文宋体, 中易宋体, Times New Roman Bold, 黑体, Arial, etc.), point size, and baseline offset.
+- **🖨️ Scan & Ink Bleed Simulation**: Softens digital rasterization with morphological edge dilation and ink blending to naturally match scanned paper texture and printer ink spread.
+- **🛡️ Mandatory Preview Verification**: Generates side-by-side and 4x zoomed comparison previews before making any permanent changes to the image.
+- **💾 Lossless Metadata & Auto-Backup**: Preserves original image DPI (e.g. 120 or 300 DPI), ICC color profile, and EXIF tags. Automatically creates a `_backup` copy before overwriting.
 
 ---
 
@@ -23,11 +27,11 @@ An **Antigravity agent skill** and standalone CLI tool for **seamless, typograph
 document-image-text-replacer/
 ├── SKILL.md                          # Skill definition & prompt instructions for Antigravity
 ├── README.md                         # Project documentation
-├── requirements.txt                  # Python dependencies (Pillow, numpy)
+├── requirements.txt                  # Python dependencies (Pillow, numpy, rapidocr, opencv)
 ├── LICENSE                           # MIT License
 ├── .gitignore                        # Git ignore patterns
 ├── scripts/
-│   └── replacer.py                   # Core CLI tool (preview & apply)
+│   └── replacer.py                   # Core CLI tool (auto, preview, apply)
 └── references/
     └── typography_guidelines.md      # Font size mapping, DPI conversions & typography rules
 ```
@@ -60,12 +64,12 @@ Once cloned, Antigravity will automatically discover and load the skill across a
 
 Simply ask Antigravity naturally in any workspace:
 
-> "帮我将表格图片中的日期 '2026.8.21' 改为 '2026.5.30'，文字大小和规格保持现状"
+> "帮我将表格图片中的地点 '4-506' 改为 '4#411'，文字大小和规格保持现状"
 >
-> *"Please replace the date '2026.8.21' in this table image with '2026.5.30', keeping font size, baseline, and scanned texture consistent."*
+> *"Please replace '4-506' with '4#411' in this table image, keeping font size, baseline, and scanned texture consistent."*
 
 Antigravity will automatically:
-1. Locate the text and analyze font metrics.
+1. Run the `auto` pipeline to locate the text, match font metrics, and inpaint background.
 2. Render a cropped preview comparison (`preview_comparison.png`) for your review.
 3. Upon your confirmation, backup the original file and apply the modification seamlessly.
 
@@ -73,22 +77,38 @@ Antigravity will automatically:
 
 ## 🛠️ Standalone CLI Usage
 
-You can also run the underlying tool directly from the command line:
+### 1. High-Speed Auto Mode (Recommended)
+Automatically detects target text coordinates and fits typography:
+```bash
+python scripts/replacer.py auto \
+  --image "path/to/document.jpg" \
+  --search "4-506" \
+  --replace "4#411" \
+  --output-dir "./preview_output"
+```
 
-### 1. Generate Preview
+*(Optional)* Speed up OCR by restricting search to a coarse region:
+```bash
+python scripts/replacer.py auto \
+  --image "path/to/document.jpg" \
+  --search "4-506" \
+  --replace "4#411" \
+  --roi 1000 400 1600 650 \
+  --output-dir "./preview_output"
+```
+
+### 2. Manual Preview Mode
+For manual bounding box specifications:
 ```bash
 python scripts/replacer.py preview \
   --image "path/to/document.jpg" \
   --box 1250 368 1430 403 \
-  --erase-box 95 0 175 35 \
-  --text-x 97 --text-y -7 \
-  --replace-text "5. 30" \
-  --font-family stsong \
-  --font-size 35 \
+  --search-text "2026.8.21" \
+  --replace-text "2026.5.30" \
   --output-dir "./preview_output"
 ```
 
-### 2. Apply Approved Modification
+### 3. Apply Approved Modification
 ```bash
 python scripts/replacer.py apply \
   --meta-file "./preview_output/preview_meta.json" \
