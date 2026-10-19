@@ -64,9 +64,9 @@ Once cloned, Antigravity will automatically discover and load the skill across a
 
 Simply ask Antigravity naturally in any workspace:
 
-> "帮我将表格图片中的地点 '4-506' 改为 '4#411'，文字大小和规格保持现状"
+> "帮我将表格图片中的地点 '44506' 改为 '43411'，文字大小和规格保持现状"
 >
-> *"Please replace '4-506' with '4#411' in this table image, keeping font size, baseline, and scanned texture consistent."*
+> *"Please replace '44506' with '43411' in this table image, keeping font size, baseline, and scanned texture consistent."*
 
 Antigravity will automatically:
 1. Run the `auto` pipeline to locate the text, match font metrics, and inpaint background.
@@ -82,8 +82,8 @@ Automatically detects target text coordinates and fits typography:
 ```bash
 python scripts/replacer.py auto \
   --image "path/to/document.jpg" \
-  --search "4-506" \
-  --replace "4#411" \
+  --search "44506" \
+  --replace "43411" \
   --output-dir "./preview_output"
 ```
 
@@ -91,8 +91,8 @@ python scripts/replacer.py auto \
 ```bash
 python scripts/replacer.py auto \
   --image "path/to/document.jpg" \
-  --search "4-506" \
-  --replace "4#411" \
+  --search "44506" \
+  --replace "43411" \
   --roi 1000 400 1600 650 \
   --output-dir "./preview_output"
 ```

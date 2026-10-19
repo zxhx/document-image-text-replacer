@@ -28,7 +28,7 @@ It automatically detects target text locations using local **RapidOCR**, fits th
 
 ## Quick Start (Recommended: High-Speed Auto Pipeline)
 
-When the user asks to change text in an image (e.g. *"帮我将表格图片中的地点 '4-506' 改为 '4#411'，文字大小和规格保持现状"*):
+When the user asks to change text in an image (e.g. *"帮我将表格图片中的地点 '44506' 改为 '43411'，文字大小和规格保持现状"*):
 
 ### 1. Generate Preview in 1 Step (`auto`)
 Run the all-in-one automated replacement command. It automatically locates the text, fits font family and point size, in-paints the background texture, and generates comparison previews in ~5-7 seconds:
